@@ -38,6 +38,12 @@ class Shoter(object):
     def get_url(self):
         return self.driver.current_url
 
+    def get_snapshot(self):
+        sections = self.driver.find_elements_by_css_selector('section.present')
+        if not sections:
+            return None
+        return sections[-1].get_attribute('innerHTML')
+
     def exit(self):
         self.driver.quit()
 
@@ -47,16 +53,16 @@ def main():
     shoter.init_driver()
     shoter.load_page('https://java-tooling.firebaseapp.com')
 
-    previous_url = None
-    url = shoter.get_url()
+    previous = {'url': None, 'content': None}
+    current = {'url': shoter.get_url(), 'content': shoter.get_snapshot()}
     count = 1
 
-    while url != previous_url:
+    while current != previous:
         shoter.shot(count)
         shoter.next_slide()
         count += 1
-        previous_url = url
-        url = shoter.get_url()
+        previous = current
+        current = {'url': shoter.get_url(), 'content': shoter.get_snapshot()}
 
     shoter.exit()
 
