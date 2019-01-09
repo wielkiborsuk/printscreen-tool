@@ -51,7 +51,7 @@ class Shoter(object):
 def main():
     shoter = Shoter()
     shoter.init_driver()
-    shoter.load_page('https://java-tooling.firebaseapp.com')
+    shoter.load_page('http://localhost:8000')
 
     previous = {'url': None, 'content': None}
     current = {'url': shoter.get_url(), 'content': shoter.get_snapshot()}
