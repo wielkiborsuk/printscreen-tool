@@ -1,5 +1,7 @@
 import time
 import os
+import sys
+import subprocess
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -49,9 +51,11 @@ class Shoter(object):
 
 
 def main():
+    url = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:8000'
+
     shoter = Shoter()
     shoter.init_driver()
-    shoter.load_page('http://localhost:8000')
+    shoter.load_page(url)
 
     previous = {'url': None, 'content': None}
     current = {'url': shoter.get_url(), 'content': shoter.get_snapshot()}
@@ -65,6 +69,8 @@ def main():
         current = {'url': shoter.get_url(), 'content': shoter.get_snapshot()}
 
     shoter.exit()
+
+    subprocess.call(['convert', 'out/*.png', 'out/out.pdf'])
 
 
 if __name__ == "__main__":
