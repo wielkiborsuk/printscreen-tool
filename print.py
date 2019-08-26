@@ -1,5 +1,6 @@
 import time
 import os
+import shutil
 import sys
 import subprocess
 from selenium import webdriver
@@ -52,6 +53,9 @@ class Shoter(object):
 
 def main():
     url = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:8000'
+
+    shutil.rmtree('out', ignore_errors=True)
+    os.mkdir('out')
 
     shoter = Shoter()
     shoter.init_driver()
