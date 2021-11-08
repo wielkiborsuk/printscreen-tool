@@ -18,9 +18,11 @@ class Shoter:
         """ initialize webdriver object, set browser size to match presentation size """
         options = Options()
         options.add_argument('--headless')
+        options.add_argument('--disable-dev-shm-usage')
 
-        driver = 'chromedriver'
-        driver = webdriver.Chrome(driver, chrome_options=options)
+        driver = 'chromium.chromedriver'
+        path = '/snap/bin/chromium.chromedriver'
+        driver = webdriver.Chrome(driver, options=options)
         driver.set_window_size(width, height)
         self.driver = driver
 
