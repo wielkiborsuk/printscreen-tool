@@ -6,6 +6,7 @@ import subprocess
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
 import click
@@ -14,7 +15,7 @@ import click
 class Shoter:
     """ class able to record screenshots from slenium webdriver """
 
-    def __init__(self, width=1280, height=720):
+    def __init__(self, width=1920, height=1080):
         """ initialize webdriver object, set browser size to match presentation size """
         options = Options()
         options.add_argument('--headless')
@@ -53,10 +54,10 @@ class Shoter:
 
     def get_snapshot(self):
         """ expose html content of current slide to verify if presentation has finished """
-        sections = self.driver.find_elements_by_css_selector('section.present')
-        if not sections:
+        section = self.driver.find_element(By.CSS_SELECTOR, 'section.present')
+        if not section:
             return None
-        return sections[-1].get_attribute('innerHTML')
+        return section.get_attribute('innerHTML')
 
     def exit(self):
         """ close/quit driver session """
@@ -65,7 +66,7 @@ class Shoter:
 
 @click.command(name='print')
 @click.option('--output', '-o', default='out/out.pdf', help='Destination for final pdf file')
-@click.option('--geometry', '-g', default='1280x720', help='browser window size for screenshots')
+@click.option('--geometry', '-g', default='1920x1080', help='browser window size for screenshots')
 @click.argument('url', default='http://localhost:8000')
 def main(url, output, geometry):
     """ accept presentation url as parameter and record presentation to specific file """
