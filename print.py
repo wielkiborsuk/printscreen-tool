@@ -23,7 +23,7 @@ class Shoter:
 
         driver = 'chromium.chromedriver'
         path = '/snap/bin/chromium.chromedriver'
-        driver = webdriver.Chrome(driver, options=options)
+        driver = webdriver.Chrome(options=options)
         driver.set_window_size(width, height)
         self.driver = driver
 
